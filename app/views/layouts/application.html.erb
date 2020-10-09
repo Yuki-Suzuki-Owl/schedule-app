@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ScheduleMaker</title>
+    <%= render 'layouts/rails_default' %>
+  </head>
+
+  <body>
+    <header>
+      <h1>---ScheduleMaker---</h1>
+      <div class="menu">
+        <%= link_to "ログイン","#" %>
+        <%= link_to "ログアウト","#" %>
+        <%= link_to "ログインユーザー名","#" %>
+      </div>
+    </header>
+    <% if flash.any? %>
+      <% flash.each do |message_type,message| %>
+        <%= message %>
+      <% end %>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>
