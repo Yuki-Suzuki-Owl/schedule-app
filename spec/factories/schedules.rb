@@ -4,5 +4,6 @@ FactoryBot.define do
     endtime { "2020-10-12 14:00:00" }
     title { "Title" }
     things { "Things" }
+    user
   end
 end

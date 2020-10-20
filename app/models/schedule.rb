@@ -1,4 +1,5 @@
 class Schedule < ApplicationRecord
+  belongs_to :user
   validates :starttime,:endtime,:title,presence:true
   validates :title,length:{minimum:2}
   validate :starttime,:same_starttime_is_invalid,:same_time_is_invalid

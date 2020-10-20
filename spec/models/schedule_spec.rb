@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Schedule, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
   before do
-    @schedule = FactoryBot.create(:schedule)
+    @user = FactoryBot.create(:user)
+    @schedule = FactoryBot.create(:schedule,starttime:Time.current,endtime:Time.current.ago(1.hours),user:@user)
   end
 
   it "starttimeが空なら無効" do
@@ -38,8 +39,8 @@ RSpec.describe Schedule, type: :model do
   end
 
   it "starttime,starttimeの時間かぶりは無効" do
-    @schedule = FactoryBot.create(:schedule,starttime:Time.current,endtime:Time.current.ago(1.hours),title:"task1")
-    @schedule2 = FactoryBot.build(:schedule,starttime:Time.current.ago(0.hours),endtime:Time.current.ago(2.hours),title:"task1")
+    # @schedule = FactoryBot.create(:schedule,starttime:Time.current,endtime:Time.current.ago(1.hours),title:"task1")
+    @schedule2 = FactoryBot.build(:schedule,starttime:Time.current.ago(0.hours),endtime:Time.current.ago(2.hours),title:"task1",user:@user)
     @schedule2.valid?
     expect(@schedule2.errors[:starttime]).to include("aready habe a plan")
   end
