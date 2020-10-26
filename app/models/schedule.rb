@@ -4,6 +4,8 @@ class Schedule < ApplicationRecord
   validates :title,length:{minimum:2}
   validate :starttime,:same_starttime_is_invalid,:same_time_is_invalid
   # ,:starttime_earlier_than_previous_endtim
+  default_scope -> {order(starttime: :asc)}
+  # バリデーションをつける
 
   private
     def same_time_is_invalid

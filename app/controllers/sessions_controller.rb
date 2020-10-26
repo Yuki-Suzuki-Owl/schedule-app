@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_action :logged_in_user,only:[:new,:create]
   def new
   end
 
@@ -7,7 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       flash[:success] = "ログインしました。"
       login(user)
-      redirect_to user
+      redirect_to schedule_path(user.id)
     else
       flash[:info] = "ログインできませんでした。"
       redirect_to login_path
@@ -18,7 +19,7 @@ class SessionsController < ApplicationController
     if logged_in
       flash[:success] = "ログアウトしました。"
       logout
-      redirect_to users_path
+      redirect_to root_path
     end
   end
 end

@@ -10,44 +10,70 @@
       <p><span>things</span><%= schedule.things %></p>
       <p class="endtime"><span>endtime</span><%= schedule.endtime %></p>
     </div> -->
-    <ul class="plan">
-      <li class="starttime">starttime:<%= schedule.starttime %></li>
-      <li><span>&nbsp</span>title:<%= schedule.title %></li>
-      <li><span>&nbsp</span>things:<%= schedule.things %></li>
-      <li class="endtime">endtime:<%= schedule.endtime %></li>
-      <%= form_with url:schedule,local:true,method: :get do |edit| %>
-      <%= hidden_field_tag :scheduleId,schedule.id %>
-      <%= edit.submit "変更" %>
-      <%= link_to "削除", schedule,method: :delete  %>
-      <% end %>
+    <ul class="plan" style="background-color:<%= @color %>; " >
+      <section>
+        <!-- <li>plan day : <%= schedule.schedule_day %></li> -->
+        <li class="starttime">starttime:<%= schedule.starttime %></li>
+        <ol>
+          <div class="plan_content">
+            <!-- <li><a href="#">title:<%= schedule.title %></a></li>
+              <p>クリックしたら非表示になってたthingsを表示する</p> -->
+            <li><label for="label<%= schedule.id %>">title:<%= schedule.title %></label></li>
+            <input class="hidden" type="checkbox" id="label<%= schedule.id %>">
+            <div class="hidden_show">
+              <li>things:<%= schedule.things %></li>
+            </div>
+            <!-- <li>things:<%= schedule.things %></li> -->
+          </div>
+        </ol>
+        <li class="endtime">endtime:<%= schedule.endtime %></li>
+        <%= form_with url:schedule,local:true,method: :get do |edit| %>
+          <%= hidden_field_tag :scheduleId,schedule.id %>
+          <%= edit.submit "変更" %>
+          <%= link_to "削除", schedule,method: :delete  %>
+        <% end %>
+      </section>
     </ul>
     <% end %>
   </div>
 
   <div class="make">
+    <h2>予定作成</h2>
+    <%# <%= Date.today %>
     <%= form_with model:@schedule,local:true do |f| %>
       <%= render 'shared/errors_messages',object:f.object %>
       <%# エラーメッセージが出ないのはこの場合普通？ %>
 
-      <li>
+      <p>
+        <%= f.hidden_field :schedule_day,value:Date.today %>
+      </p>
+      <p>
         <%= f.label :starttime %>
         <%= f.datetime_select :starttime,{minute_step:30} %>
-      </li>
+      </p>
       ↓
-      <li>
+      <p>
         <%= f.label :endtime %>
         <%= f.datetime_select :endtime,{minute_step:30} %>
         <%# discard_year:true,discard_month:true,これを入れると1日付けが0/1になっしまう %>
-      </li>
-      <li><%= f.label :title %></li>
-      <li><%= f.text_field :title,class:"title" %></li>
-      <li><%= f.label :things %></li>
-      <li><%= f.text_area :things %></li>
-      <li><%= f.submit class:"submit" %></li>
+      </p>
+      <p><%= f.label :title %></p>
+      <p><%= f.text_field :title,class:"title" %></p>
+      <p><%= f.label :things %></p>
+      <p><%= f.text_area :things %></p>
+
+      <%= f.color_field :color %>
+      <%= f.check_box :color %>
+      <%= select_tag "params[:color",options_for_select(["red","green","blue"],"red") %>
+      <%= check_box_tag "params[:schedule][:color]","red",checked = false %>
+      <%= f.color_field :color%>
+      <%= f.check_box "color",{checked:true},true,false %>
+      <%= f.check_box "color",{checked:true},true,false %>
+
+      <p><%= f.submit class:"submit" %></p>
     <% end %>
     f.datetime_field :starttime,{discard_year:true}
 
-    <p>params[:id] = <%= @a.title%></p>
     <p>params[:id] = <%= @params %></p>
   </div>
   <div class="clear"></div>

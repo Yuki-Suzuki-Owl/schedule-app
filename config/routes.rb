@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   # get 'sessions/new'
   # get 'users/new'
   # get 'users/edit'
-  root to:"users#index"
-  get  'login',to:"sessions#new"
-  post 'login',to:"sessions#create"
+  # root to:"users#index"
+  root to:"schedules#about"
+  get    'login' ,to:"sessions#new"
+  post   'login' ,to:"sessions#create"
   delete 'logout',to:"sessions#destroy"
   resources :users
   resources :schedules

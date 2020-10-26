@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
-  before_action :login_user,only:[:show,:edit,:update,:destroy]
+  before_action :login_user,only:[:index,:show,:edit,:update,:destroy]
   before_action :correct_user,only:[:show,:edit,:update]
   before_action :admin_user,only:[:destroy]#index
   before_action :logged_in_user,only:[:new,:create]
+  # アプリ全体出使うメソッドはapplicationcontorollerに移す
 
   def index
     @users = User.all
@@ -20,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       login(@user)
-      redirect_to @user
+      redirect_to schedule_path(current_user.id)
     else
       render 'new'
     end
@@ -75,9 +76,5 @@ class UsersController < ApplicationController
       end
     end
 
-    def logged_in_user
-      if current_user
-        redirect_to current_user,notice:"既にログインしています"
-      end
-    end
+
 end

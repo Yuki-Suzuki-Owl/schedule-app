@@ -1,6 +1,7 @@
 class SchedulesController < ApplicationController
   def show
-    @schedules = current_user.schedules
+    @color = "skyblue"
+    @schedules = current_user.schedules.where(schedule_day:Date.today)
     # .find(starttime:Time.current.day)
     # @schedule = current_user.schedules.build
     @a = a = current_user.schedules.find_by(id:7)
@@ -58,7 +59,7 @@ class SchedulesController < ApplicationController
 
   private
     def schedule_params
-      params.require(:schedule).permit(:starttime,:endtime,:title,:things)
+      params.require(:schedule).permit(:starttime,:endtime,:schedule_day,:title,:things)
     end
 
     def today
