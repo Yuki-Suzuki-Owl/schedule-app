@@ -7,10 +7,15 @@
 
   <body>
     <header>
-      <h1>---ScheduleMaker---</h1>
+      <% if logged_in %>
+        <h1><%= link_to "---ScheduleMaker---",schedule_path(current_user,day:Date.current) %></h1>
+      <% else %>
+        <h1><%= link_to "---ScheduleMaker---",root_path %></h1>
+      <% end %>
       <div class="menu">
         <% if logged_in %>
-          ログインユーザー名:<%= current_user.name %>
+          ログインユーザー名:<%= link_to current_user.name,user_path(current_user.id) %>
+          <%= link_to "月次カレンダーへ",schedules_path%>
           <%= link_to "ログアウト",logout_path,method: :delete %>
         <% else %>
           <%= link_to "新規登録",new_user_path %>

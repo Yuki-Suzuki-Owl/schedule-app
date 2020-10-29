@@ -1,39 +1,51 @@
-<h1>ここがルートページになる<span>ここに1日のスケジュールを表示する</span>
-<span>new editはこのページで行う</span></h1>
 <main>
   <div class="schedule">
-    <h2>TODAY is <%= Time.current %></h2>
-    <% @schedules.each do |schedule| %>
-    <!-- <div class="plan">
-      <span>starttime:</span><%= schedule.starttime %>
-      <p><span>title</span><%= schedule.title %></p>
-      <p><span>things</span><%= schedule.things %></p>
-      <p class="endtime"><span>endtime</span><%= schedule.endtime %></p>
-    </div> -->
-    <ul class="plan" style="background-color:<%= @color %>; " >
-      <section>
-        <!-- <li>plan day : <%= schedule.schedule_day %></li> -->
-        <li class="starttime">starttime:<%= schedule.starttime %></li>
-        <ol>
-          <div class="plan_content">
-            <!-- <li><a href="#">title:<%= schedule.title %></a></li>
-              <p>クリックしたら非表示になってたthingsを表示する</p> -->
-            <li><label for="label<%= schedule.id %>">title:<%= schedule.title %></label></li>
-            <input class="hidden" type="checkbox" id="label<%= schedule.id %>">
-            <div class="hidden_show">
-              <li>things:<%= schedule.things %></li>
+    <!-- 下のやつちょっと微妙 何か変更案があれば変更する -->
+    <h2>SCHEDULE DAY is <%= @schedule_day %></h2>
+    <% if @schedules.any? %>
+      <% @schedules.each do |schedule| %>
+      <!-- <div class="plan">
+        <span>starttime:</span><%= schedule.starttime %>
+        <p><span>title</span><%= schedule.title %></p>
+        <p><span>things</span><%= schedule.things %></p>
+        <p class="endtime"><span>endtime</span><%= schedule.endtime %></p>
+      </div> -->
+      <ul class="plan" style="background-color:<%= @color %>; " >
+        <section>
+          <!-- <li>plan day : <%= schedule.schedule_day %></li> -->
+          <li class="starttime">開始時刻 : <%= schedule.starttime.to_s(:datetime_jp) %></li>
+          <ol>
+            <div class="plan_content">
+              <!-- <li><a href="#">title:<%= schedule.title %></a></li>
+                <p>クリックしたら非表示になってたthingsを表示する</p> -->
+              <li><label for="label<%= schedule.id %>">タイトル : <%= schedule.title %></label></li>
+              <input class="hidden" type="checkbox" id="label<%= schedule.id %>">
+              <div class="hidden_show">
+                <!-- <li>things:<%= schedule.things %></li> -->
+                <!-- <li>things:<%= simple_format(h(schedule.things)) %></li> --><li>やる事 : </li>
+                <ul>
+                  <li><%= simple_format(h(schedule.things)) %></li>
+                </ul>
+              </div>
+              <!-- <li>things:<%= schedule.things %></li> -->
             </div>
-            <!-- <li>things:<%= schedule.things %></li> -->
+          </ol>
+          <li class="endtime">終了時刻 : <%= schedule.endtime.to_s(:datetime_jp) %></li>
+          <div class="plan_option">
+            <%= form_with url:schedule_path,local:true,method: :get do |edit| %>
+            <%= hidden_field_tag :scheduleId,schedule.id %>
+            <%= hidden_field_tag :day,schedule.schedule_day %>
+            <%= edit.submit "変更" ,class:"plan_edit" %>
+            <%= link_to "削除", schedule,method: :delete,class:"plan_delete"  %>
+            <% end %>
           </div>
-        </ol>
-        <li class="endtime">endtime:<%= schedule.endtime %></li>
-        <%= form_with url:schedule,local:true,method: :get do |edit| %>
-          <%= hidden_field_tag :scheduleId,schedule.id %>
-          <%= edit.submit "変更" %>
-          <%= link_to "削除", schedule,method: :delete  %>
-        <% end %>
-      </section>
-    </ul>
+        </section>
+      </ul>
+      <% end %>
+    <% else %>
+      <div class="no_plan">
+        <p>！？ おっと、まだスケジュールが作成されていないようです</p>
+      </div>
     <% end %>
   </div>
 
@@ -44,17 +56,25 @@
       <%= render 'shared/errors_messages',object:f.object %>
       <%# エラーメッセージが出ないのはこの場合普通？ %>
 
-      <p>
-        <%= f.hidden_field :schedule_day,value:Date.today %>
-      </p>
+      <% if @schedule.new_record? %>
+        <!-- @scheduleが新規かどうかでvalueの値を変える -->
+        <p>
+          <%= f.hidden_field :schedule_day,value:@schedule_day %>
+          @schedule_day : schedule day is <%= @schedule_day %>
+        </p>
+      <% else %>
+        <%= f.hidden_field :schedule_day,value:@schedule.schedule_day %>
+        @schedule.schedule_day :schedule day is <%= @schedule.schedule_day %><br>
+      <% end %>
+
       <p>
         <%= f.label :starttime %>
-        <%= f.datetime_select :starttime,{minute_step:30} %>
+        <%= f.datetime_select :starttime,{use_month_numbers:true,date_separator:"/ ",minute_step:30,default:Time.current} %>
       </p>
       ↓
       <p>
         <%= f.label :endtime %>
-        <%= f.datetime_select :endtime,{minute_step:30} %>
+        <%= f.datetime_select :endtime,{use_month_numbers:true,date_separator:"/ ",minute_step:30,default:Time.current} %>
         <%# discard_year:true,discard_month:true,これを入れると1日付けが0/1になっしまう %>
       </p>
       <p><%= f.label :title %></p>
@@ -72,9 +92,7 @@
 
       <p><%= f.submit class:"submit" %></p>
     <% end %>
-    f.datetime_field :starttime,{discard_year:true}
 
-    <p>params[:id] = <%= @params %></p>
   </div>
   <div class="clear"></div>
 </main>

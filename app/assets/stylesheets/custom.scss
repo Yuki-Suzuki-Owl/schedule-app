@@ -1,5 +1,9 @@
 body {
   background-color:palegreen;
+  a {
+    text-decoration:none;
+    color:black;
+  }
 }
 
 /*  header  */
@@ -13,6 +17,8 @@ main {
   display:flex;
   width:80%;
   margin:0 auto;
+  margin-top:2%;
+  margin-bottom:5%;
   .schedule {
     // float:left;
     width:50%;
@@ -26,8 +32,11 @@ main {
   .plan {
     // background-color:skyblue;
     border-top:1px solid black;
-    padding-top:20px;
-    padding-bottom:20px;
+    padding-top:5%;
+    padding-bottom:5%;
+    .endtime {
+      padding-bottom:2%;
+    }
     li {
       line-height:2;
       list-style:none;
@@ -38,10 +47,33 @@ main {
       // margin:0 auto;
       // margin-right:20px;
       margin-left:18%;
+      .plan_option {
+        text-align:center;
+        .plan_delete, {
+          // inputに似せて作ろうといろいろ頑張ってみたけどなんか若干違う
+          // // background-color:orange
+          border:1px solid gray;
+          border-radius:3px;
+          background-color:#efefef;
+          padding-top:1px;
+          padding-bottom:2px;
+          padding-right: 7px;
+          padding-left: 7px;
+          display:inline-block;
+          font-size:0.9em;
+          cursor:default;
+          &:hover {
+            background-color:#e0e0e0;
+          }
+        }
+      }
     }
     .plan_content {
       padding-top:20px;
       padding-bottom:20px;
+      li {
+        line-height:1;
+      }
     }
 
     /* クリックでthingsを表示 */
@@ -64,7 +96,10 @@ main {
       opacity:1;
     }
   }
-  
+  .no_plan {
+    text-align:center;
+  }
+
   .make {
     // float:left;e0ffff
     width:50%;
@@ -83,4 +118,15 @@ main {
       padding:10px;
     }
   }
+
+}
+
+/* calendar */
+@import "simple_calendar";
+.calendar {
+  width:80%;
+  margin:0 auto;
+  background-color:white;
+  margin-top:20px;
+  // text-align:center;
 }
