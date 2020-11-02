@@ -2,22 +2,56 @@ class Schedule < ApplicationRecord
   belongs_to :user
   validates :starttime,:endtime,:title,presence:true
   validates :title,length:{minimum:2}
-  validate :starttime,:same_starttime_is_invalid,:same_time_is_invalid
+  # validate :starttime,:same_starttime_is_invalid,:same_time_is_invalid
   # ,:starttime_earlier_than_previous_endtim
+  # 下のメソッドに変更
+  validate :schedule_validation
   default_scope -> {order(starttime: :asc)}
   # バリデーションをつける
 
   private
-    def same_time_is_invalid
-      errors.add(:starttime,"time is incorrect") if starttime == endtime
-    end
+    # def same_time_is_invalid
+    #   errors.add(:starttime,"time is incorrect") if starttime == endtime
+    # end
+    #
+    # def same_starttime_is_invalid
+    #   errors.add(:starttime,"aready habe a plan") if Schedule.find_by(starttime:starttime)
+    #   # starttime.persisted?
+    # end
 
-    def same_starttime_is_invalid
-      errors.add(:starttime,"aready habe a plan") if Schedule.find_by(starttime:starttime)
-      # starttime.persisted?
-    end
+    # def starttime_earlier_than_previous_endtim
+    #   errors.add(:endtime,"aready have a plan") if starttime < endtime
+    #   これでは正しくバリデーションが効かない
+    # end
 
-    def starttime_earlier_than_previous_endtim
-      errors.add(:endtime,"aready have a plan") if starttime < endtime
+    def schedule_validation
+      if endtime < starttime
+        errors.add(:starttime,"time is incorrect")
+      elsif starttime == endtime
+        errors.add(:starttime,"time is incorrect")
+      end
+
+      schedules = user.schedules.where(schedule_day:schedule_day)
+      # その日のデータで開始時と終了時のかぶりは無効
+      schedules.each do |s|
+        if s.starttime == starttime
+          errors.add(:starttime,"time is incorrect")
+        elsif s.endtime == endtime
+          errors.add(:endtime,"time is incorrect")
+        end
+      end
+      # 複雑に入り組んだスケジュールは無効
+      schedules.each do |s|
+        # 既存planAを囲む様なp新規lanBはダメ
+        if starttime < s.starttime && endtime > s.endtime
+          errors.add(:starttime,"time is incorrect")
+        # 既存planAの中に新規planBのstarttimeがあったらダメ
+        elsif starttime > s.starttime && starttime < s.endtime
+          errors.add(:starttime,"time is incorrect")
+        # 既存planAの中に新規planBのendtimeがあったらダメ
+        elsif endtime > s.starttime && endtime < s.endtime
+          errors.add(:starttime,"time is incorrect")
+        end
+      end
     end
 end

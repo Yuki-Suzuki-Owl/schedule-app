@@ -1,4 +1,6 @@
-<h1>ここが1日のスケジュール画面になる予定</h1>
-<%= @user.id %>
-<%= @user.name %>
-<%= link_to "編集",edit_user_path %>
+<div class="user">
+  <h1>ユーザー情報</h1>
+  ユーザーID：<%= @user.id %>
+  ユーザー名：<%= @user.name %>
+  <%= link_to "編集",edit_user_path %>
+</div>

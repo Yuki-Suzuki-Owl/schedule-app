@@ -1,5 +1,5 @@
 <div class="calendar">
   <%= month_calendar do |date| %>
-    <%= link_to date.day,schedule_path(current_user,day:date) %>
+    <%= link_to date.day,schedule_path(current_user,day:date),class:"plan_day" %>
   <% end %>
 </div>

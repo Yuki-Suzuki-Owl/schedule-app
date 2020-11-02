@@ -10,7 +10,9 @@
         <p><span>things</span><%= schedule.things %></p>
         <p class="endtime"><span>endtime</span><%= schedule.endtime %></p>
       </div> -->
-      <ul class="plan" style="background-color:<%= @color %>; " >
+      <%# 将来的には背景色と高さを変更可能にする。背景色＝＞ユーザー選択、高さ＝＞30分＝100pxとか %>
+      <% @color = "skyblue" %> <% @height = "auto" %>
+      <ul class="plan" style="background-color:<%= @color %>; height:<%= @height %>;" >
         <section>
           <!-- <li>plan day : <%= schedule.schedule_day %></li> -->
           <li class="starttime">開始時刻 : <%= schedule.starttime.to_s(:datetime_jp) %></li>
@@ -36,7 +38,7 @@
             <%= hidden_field_tag :scheduleId,schedule.id %>
             <%= hidden_field_tag :day,schedule.schedule_day %>
             <%= edit.submit "変更" ,class:"plan_edit" %>
-            <%= link_to "削除", schedule,method: :delete,class:"plan_delete"  %>
+            <%= link_to "削除", schedule,method: :delete,class:"plan_delete button"  %>
             <% end %>
           </div>
         </section>
@@ -90,7 +92,7 @@
       <%= f.check_box "color",{checked:true},true,false %>
       <%= f.check_box "color",{checked:true},true,false %>
 
-      <p><%= f.submit class:"submit" %></p>
+      <p><%= f.submit class:"button" %></p>
     <% end %>
 
   </div>

@@ -16,10 +16,10 @@
         <% if logged_in %>
           ログインユーザー名:<%= link_to current_user.name,user_path(current_user.id) %>
           <%= link_to "月次カレンダーへ",schedules_path%>
-          <%= link_to "ログアウト",logout_path,method: :delete %>
+          <%= link_to "ログアウト",logout_path,method: :delete ,class:"button" %>
         <% else %>
-          <%= link_to "新規登録",new_user_path %>
-          <%= link_to "ログイン",login_path %>
+          <%= link_to "新規登録",new_user_path ,class:"button"%>
+          <%= link_to "ログイン",login_path ,class:"button"%>
         <% end %>
       </div>
     </header>

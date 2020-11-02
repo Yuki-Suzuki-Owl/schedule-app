@@ -1,17 +1,20 @@
-<h1>User Index Page</h1>
-<p>管理者ユーザーだけに見せるけど、今はルートページがないのでいったんここをルートページにしてる</p>
-<% if @users.any? %>
-  <% @users.each do |user| %>
-    <%= user.id %>
-    <%= user.name %>
-    <%= link_to "編集",edit_user_path(user.id) %>
-    <%= link_to "削除",user,method: :delete,data: {confirm:"#{user.name}本当に削除しますか？" } %>
-    <% if user.admin? %>
-      <span>管理者ユーザー</span>
-    <% else %>
-      <span>一般ユーザー</span>
+<div class="user">
+  <h1>管理者ページ</h1>
+  <% if @users.any? %>
+    <% @users.each do |user| %>
+      <ul>
+        <%= user.id %>
+        <%= user.name %>
+        <% if user.admin? %>
+        <span>管理者ユーザー</span>
+        <% else %>
+        <span>一般ユーザー</span>
+        <% end %>
+        <%= link_to "編集",edit_user_path(user.id) %>
+        <%= link_to "削除",user,method: :delete,data: {confirm:"#{user.name}本当に削除しますか？" } %>
+      </ul>
     <% end %>
+  <% else %>
+    <p>No Users...</p>
   <% end %>
-<% else %>
-  <p>No Users...</p>
-<% end %>
+</div>

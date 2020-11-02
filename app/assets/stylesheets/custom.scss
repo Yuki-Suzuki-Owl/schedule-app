@@ -4,11 +4,26 @@ body {
     text-decoration:none;
     color:black;
   }
+  .button{
+    border:1px solid darkgray;
+    border-radius:3px;
+    background-color:#efefef;
+    padding:1px 6px;
+    &:active {
+      box-shadow:2px 3px gray;
+      background-color:lightgray;
+      position:relative;
+      bottom:-2px;
+    }
+  }
 }
 
 /*  header  */
 header {
   text-align:center;
+  .menu {
+
+  }
 }
 
 /*  schedule  */
@@ -49,6 +64,15 @@ main {
       margin-left:18%;
       .plan_option {
         text-align:center;
+        .plan_edit {
+          &:active {
+            // bodyのと同じため、変更時はここも変更すること！
+            box-shadow:2px 3px gray;
+            background-color:lightgray;
+            position:relative;
+            bottom:-2px;
+          }
+        }
         .plan_delete, {
           // inputに似せて作ろうといろいろ頑張ってみたけどなんか若干違う
           // // background-color:orange
@@ -129,4 +153,54 @@ main {
   background-color:white;
   margin-top:20px;
   // text-align:center;
+  .plan_day {
+    display:block;
+    width:100%;
+    height:100%;
+    // background-color:green;
+  }
+}
+.simple-calendar {
+  font-size:1.3em;
+}
+
+/* user */
+.user {
+  width:50%;
+  margin:0 auto;
+  margin-top:20px;
+  padding:0 30px;
+  padding-top:10px;
+  padding-bottom:30px;
+  background-color:white;
+  h1 {
+    text-align:center;
+  }
+  .form_field {
+    // background-color:gray;
+    border:1px solid black;
+    width:50%;
+    margin:0 auto;
+    padding:20px 0px;
+    .form {
+      display:block;
+      margin:0 auto;
+      text-align:center;
+      padding:5px;
+      margin-bottom:10px;
+    }
+  }
+}
+
+/* about */
+.about {
+  width:80%;
+  margin:0 auto;
+  background-color:white;
+  margin-top:20px;
+  padding-top:10px;
+  padding-bottom:30px;
+  h1 {
+    text-align:center;
+  }
 }

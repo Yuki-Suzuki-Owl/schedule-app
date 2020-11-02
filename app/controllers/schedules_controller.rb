@@ -1,6 +1,6 @@
 class SchedulesController < ApplicationController
   def show
-    @color = "skyblue"
+    # @color = "skyblue"
     schedules = current_user.schedules.where(schedule_day:params[:day])
     @schedule_day = params[:day]
     @schedules = schedules
@@ -59,6 +59,7 @@ class SchedulesController < ApplicationController
       # render "show"
       redirect_to schedule_path(current_user.id,day:@schedule.schedule_day)
     else
+      @schedule.delete
       flash[:danger] = "エラーが発生しました。恐れいりますが、もう一度予定を作成し直してください。"
       redirect_to schedule_path(current_user.id,day:@schedule.schedule_day)
     end
