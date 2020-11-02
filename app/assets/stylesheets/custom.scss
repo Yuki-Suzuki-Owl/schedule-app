@@ -16,6 +16,10 @@ body {
       bottom:-2px;
     }
   }
+  .flash {
+    text-align:center;
+    margin-top:50px;
+  }
 }
 
 /*  header  */
@@ -148,10 +152,10 @@ main {
 /* calendar */
 @import "simple_calendar";
 .calendar {
-  width:80%;
-  margin:0 auto;
+  width:100%;
+  // margin:0 auto;
   background-color:white;
-  margin-top:20px;
+  // margin-top:20px;
   // text-align:center;
   .plan_day {
     display:block;
@@ -168,11 +172,11 @@ main {
 .user {
   width:50%;
   margin:0 auto;
-  margin-top:20px;
-  padding:0 30px;
-  padding-top:10px;
+  // margin-top:20px;
+  // padding:0 30px;
+  // padding-top:10px;
   padding-bottom:30px;
-  background-color:white;
+  // background-color:white;
   h1 {
     text-align:center;
   }
@@ -181,7 +185,7 @@ main {
     border:1px solid black;
     width:50%;
     margin:0 auto;
-    padding:20px 0px;
+    padding:20px;
     .form {
       display:block;
       margin:0 auto;
@@ -193,14 +197,22 @@ main {
 }
 
 /* about */
-.about {
+.about,.text {
   width:80%;
   margin:0 auto;
-  background-color:white;
-  margin-top:20px;
+  // background-color:white;
+  // margin-top:20px;
   padding-top:10px;
   padding-bottom:30px;
   h1 {
     text-align:center;
+  }
+  li {
+    list-style:none;
+    line-height:2;
+  }
+  .new_link {
+    text-align:center;
+    margin:50px auto;
   }
 }

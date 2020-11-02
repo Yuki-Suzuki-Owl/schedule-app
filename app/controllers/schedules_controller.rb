@@ -1,6 +1,6 @@
 class SchedulesController < ApplicationController
+  before_action :login_user,only:[:index,:show,:create,:update,:destroy]
   def show
-    # @color = "skyblue"
     schedules = current_user.schedules.where(schedule_day:params[:day])
     @schedule_day = params[:day]
     @schedules = schedules
@@ -80,8 +80,5 @@ class SchedulesController < ApplicationController
   private
     def schedule_params
       params.require(:schedule).permit(:starttime,:endtime,:schedule_day,:title,:things)
-    end
-
-    def today
     end
 end
