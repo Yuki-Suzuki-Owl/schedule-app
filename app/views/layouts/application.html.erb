@@ -27,11 +27,11 @@
     <% if flash.any? %>
     <div class="flash">
       <% flash.each do |message_type,message| %>
-        <%= message %>
+        <span><%= message %></span>
       <% end %>
     </div>
     <% end %>
-    
+
     <main>
       <%= yield %>
     </main>

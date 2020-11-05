@@ -38,7 +38,8 @@ class SchedulesController < ApplicationController
       # redirect_to (@schedule,@schedule.schedule_day)
       redirect_to schedule_path(current_user.id,day:@schedule.schedule_day)
     else
-      flash[:success] = "予定が作成できませんでした。"
+      flash[:danger] = "予定が作成できませんでした。"
+      flash[:danger2] = @schedule.errors.full_messages
       # render "show"
       redirect_to schedule_path(current_user.id,day:@schedule.schedule_day)
     end

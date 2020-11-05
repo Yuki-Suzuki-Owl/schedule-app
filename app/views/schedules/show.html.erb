@@ -1,6 +1,10 @@
 <div class="schedule">
   <!-- 下のやつちょっと微妙 何か変更案があれば変更する -->
   <h2>SCHEDULE DAY is <%= @schedule_day %></h2>
+  <p>1 <%= Time.current%></p>
+  <p>2 <%= Time.current.ago(1.hours)%></p>
+  <p>3 <%= Time.current + 1.hours%></p>
+  <p><%= Date.yesterday < Date.today%></p>
   <% if @schedules.any? %>
     <% @schedules.each do |schedule| %>
     <!-- <div class="plan">
@@ -56,7 +60,7 @@
   <%# <%= Date.today %>
   <%= form_with model:@schedule,local:true do |f| %>
     <%= render 'shared/errors_messages',object:f.object %>
-    <%# エラーメッセージが出ないのはこの場合普通？ %>
+    <%# renderじゃないからエラーメッセージが出ない %>
 
     <% if @schedule.new_record? %>
       <!-- @scheduleが新規かどうかでvalueの値を変える -->
