@@ -21,6 +21,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       login(@user)
+      flash[:success] = "アカウントを作成しました。"
       redirect_to schedule_path(current_user.id)
     else
       render 'new'
