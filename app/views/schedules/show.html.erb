@@ -1,10 +1,7 @@
 <div class="schedule">
   <!-- 下のやつちょっと微妙 何か変更案があれば変更する -->
   <h2>SCHEDULE DAY is <%= @schedule_day %></h2>
-  <p>1 <%= Time.current%></p>
-  <p>2 <%= Time.current.ago(1.hours)%></p>
-  <p>3 <%= Time.current + 1.hours%></p>
-  <p><%= Date.yesterday < Date.today%></p>
+  <p><%= Time.current%></p>
   <% if @schedules.any? %>
     <% @schedules.each do |schedule| %>
     <!-- <div class="plan">
@@ -42,7 +39,7 @@
           <%= hidden_field_tag :scheduleId,schedule.id %>
           <%= hidden_field_tag :day,schedule.schedule_day %>
           <%= edit.submit "変更" ,class:"plan_edit" %>
-          <%= link_to "削除", schedule,method: :delete,class:"plan_delete button"  %>
+          <%= link_to "削除",schedule,method: :delete,data:{confirm:"#{schedule.title} この予定をキャンセルしますか？"},class:"plan_delete button"  %>
           <% end %>
         </div>
       </section>

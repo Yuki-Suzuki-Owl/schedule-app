@@ -49,13 +49,15 @@ class SchedulesController < ApplicationController
     @schedule = current_user.schedules.find(params[:id])
     before_starttime = @schedule.starttime
     before_endtime = @schedule.endtime
+    before_title = @schedule.title
+    before_things = @schedule.things
     reset_starttime = reset_endtime = Time.zone.local(Time.current.year,Time.current.month,Time.current.day,00,00,00)
 
     @schedule.update_columns(starttime:reset_starttime,endtime:reset_endtime)
     if @schedule.update_attributes(schedule_params)
       flash[:success] = "予定を変更しました。"
       redirect_to schedule_path(current_user.id,day:@schedule.schedule_day)
-    elsif @schedule.update_attributes(starttime:before_starttime,endtime:before_endtime)
+    elsif @schedule.update_attributes(title:before_title,things:before_things,starttime:before_starttime,endtime:before_endtime)
       flash[:success] = "予定が変更できませんでした。"
       # render "show"
       redirect_to schedule_path(current_user.id,day:@schedule.schedule_day)
