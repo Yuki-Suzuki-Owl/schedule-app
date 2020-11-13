@@ -1,29 +1,15 @@
 class SchedulesController < ApplicationController
   before_action :login_user,only:[:index,:show,:create,:update,:destroy]
   def show
-    schedules = current_user.schedules.where(schedule_day:params[:day])
-    @schedule_day = params[:day]
-    @schedules = schedules
+    @schedules = current_user.schedules.where(schedule_day:params[:day])
+    # カレンダーから受け取った日付をスケジュールで使う。無い場合は今日の日付け使用
+    if params[:day]
+      @schedule_day = params[:day]
+    else
+      @schedule_day = Date.today
+    end
 
-    # カレンダーの日付けのデータがなければきょうのデータを入れる → データがなければ”データなし”と表示に変更
-    # if schedules == []
-    #   @schedules = schedules
-    # else
-    #   @schedules = schedules
-    # end
-
-    # schedule = current_user.schedules.where(schedule_day:params[:day])
-    # if schedule == nil
-    #   @schedules = current_user.schedules.where(schedule_day:Time.current)
-    # else
-    #   @schedule = current_user.schedules.where(schedule_day:schedule)
-    # end
-    # # @schedules = current_user.schedules.where(schedule_day:Time.current)
-    # .find(starttime:Time.current.day)
-
-    # params[:day]の日付けでデータがあるものは正常に処理されるけど、データがない奴はエラーになってしまう。 目的としてはとりあえず京にデータを表示したい
-
-    # @schedule = current_user.schedules.build
+    # スケジュール変更の際に変更スケジュールのIDが送られれくる
     if params[:scheduleId]
       @schedule = current_user.schedules.find_by(id:params[:scheduleId])
     else
@@ -47,6 +33,8 @@ class SchedulesController < ApplicationController
 
   def update
     @schedule = current_user.schedules.find(params[:id])
+    # 変更前のデータを一時保管しておき、ゼロデータでリセットし更新する
+    # 問題点： 0:00の時間に変更できなくなる？
     before_starttime = @schedule.starttime
     before_endtime = @schedule.endtime
     before_title = @schedule.title

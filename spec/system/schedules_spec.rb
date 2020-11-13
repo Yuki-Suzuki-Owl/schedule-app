@@ -151,9 +151,6 @@ RSpec.describe 'schedule機能',type: :system do
       #   expect(page).to have_content '予定を削除しました。'
       # end
     end
-
-    context '失敗' do
-      # 失敗する場合ってなんだ？
-    end
+    
   end
 end

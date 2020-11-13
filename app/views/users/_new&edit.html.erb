@@ -8,11 +8,13 @@
     <%= f.label :email,class:"form" %>
     <%= f.email_field :email,class:"form" %>
 
-    <%= f.label :password,class:"form" %>
-    <%= f.password_field :password,class:"form" %>
+    <% if @user.new_record? %>
+      <%= f.label :password,class:"form" %>
+      <%= f.password_field :password,class:"form" %>
 
-    <%= f.label :password_confirmation,class:"form" %>
-    <%= f.password_field :password_confirmation,class:"form" %>
+      <%= f.label :password_confirmation,class:"form" %>
+      <%= f.password_field :password_confirmation,class:"form" %>
+    <% end %>
 
     <%= f.submit class:"form button"%>
   <% end %>

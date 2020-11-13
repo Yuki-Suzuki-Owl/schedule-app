@@ -1,48 +1,39 @@
 <div class="schedule">
   <!-- 下のやつちょっと微妙 何か変更案があれば変更する -->
   <h2>SCHEDULE DAY is <%= @schedule_day %></h2>
-  <p><%= Time.current%></p>
   <% if @schedules.any? %>
     <% @schedules.each do |schedule| %>
-    <!-- <div class="plan">
-      <span>starttime:</span><%= schedule.starttime %>
-      <p><span>title</span><%= schedule.title %></p>
-      <p><span>things</span><%= schedule.things %></p>
-      <p class="endtime"><span>endtime</span><%= schedule.endtime %></p>
-    </div> -->
 
     <%# 将来的には背景色と高さを変更可能にする。背景色＝＞ユーザー選択、高さ＝＞30分＝100pxとか %>
     <% @color = "skyblue" %> <% @height = "auto" %>
     <ul class="plan" style="background-color:<%= @color %>; height:<%= @height %>;" >
+
       <section>
         <!-- <li>plan day : <%= schedule.schedule_day %></li> -->
         <li class="starttime">開始時刻 : <%= schedule.starttime.to_s(:datetime_jp) %></li>
         <ol>
           <div class="plan_content">
-            <!-- <li><a href="#">title:<%= schedule.title %></a></li>
-              <p>クリックしたら非表示になってたthingsを表示する</p> -->
             <li><label for="label<%= schedule.id %>">タイトル : <%= schedule.title %></label></li>
             <input class="hidden" type="checkbox" id="label<%= schedule.id %>">
             <div class="hidden_show">
-              <!-- <li>things:<%= schedule.things %></li> -->
-              <!-- <li>things:<%= simple_format(h(schedule.things)) %></li> --><li>やる事 : </li>
+               <li>やる事 : </li>
               <ul>
                 <li><%= simple_format(h(schedule.things)) %></li>
               </ul>
             </div>
-            <!-- <li>things:<%= schedule.things %></li> -->
           </div>
         </ol>
         <li class="endtime">終了時刻 : <%= schedule.endtime.to_s(:datetime_jp) %></li>
         <div class="plan_option">
           <%= form_with url:schedule_path,local:true,method: :get do |edit| %>
-          <%= hidden_field_tag :scheduleId,schedule.id %>
-          <%= hidden_field_tag :day,schedule.schedule_day %>
-          <%= edit.submit "変更" ,class:"plan_edit" %>
-          <%= link_to "削除",schedule,method: :delete,data:{confirm:"#{schedule.title} この予定をキャンセルしますか？"},class:"plan_delete button"  %>
+            <%= hidden_field_tag :scheduleId,schedule.id %>
+            <%= hidden_field_tag :day,schedule.schedule_day %>
+            <%= edit.submit "変更" ,class:"plan_edit" %>
+              <%= link_to "削除",schedule,method: :delete,data:{confirm:"#{schedule.title} この予定をキャンセルしますか？"},class:"plan_delete button"  %>
           <% end %>
         </div>
       </section>
+
     </ul>
     <% end %>
   <% else %>
@@ -54,17 +45,15 @@
 
 <div class="make">
   <h2>予定作成</h2>
-  <%# <%= Date.today %>
   <%= form_with model:@schedule,local:true do |f| %>
     <%= render 'shared/errors_messages',object:f.object %>
     <%# renderじゃないからエラーメッセージが出ない %>
 
+    <span>スケジュール作成日：</span>
     <% if @schedule.new_record? %>
-      <!-- @scheduleが新規かどうかでvalueの値を変える -->
-      <p>
-        <%= f.hidden_field :schedule_day,value:@schedule_day %>
-        @schedule_day : schedule day is <%= @schedule_day %>
-      </p>
+      <!-- @scheduleが新規かどうかでvalueの値(@schedule.schedule_day)を変える -->
+      <%= f.hidden_field :schedule_day,value:@schedule_day %>
+      @schedule_day : schedule day is <%= @schedule_day %>
     <% else %>
       <%= f.hidden_field :schedule_day,value:@schedule.schedule_day %>
       @schedule.schedule_day :schedule day is <%= @schedule.schedule_day %><br>
@@ -72,63 +61,19 @@
 
     <p>
       <%= f.label :starttime %>
-      <%= f.datetime_select :starttime,{use_month_numbers:true,date_separator:"/ ",minute_step:30,default:Time.current} %>
+      <%= f.datetime_select :starttime,{use_month_numbers:true,date_separator:"/ ",minute_step:10,default:Time.current} %>
     </p>
     ↓
     <p>
       <%= f.label :endtime %>
-      <%= f.datetime_select :endtime,{use_month_numbers:true,date_separator:"/ ",minute_step:30,default:Time.current} %>
+      <%= f.datetime_select :endtime,{use_month_numbers:true,date_separator:"/ ",minute_step:10,default:Time.current} %>
       <%# discard_year:true,discard_month:true,これを入れると1日付けが0/1になっしまう %>
     </p>
     <p><%= f.label :title %></p>
     <p><%= f.text_field :title,class:"title" %></p>
     <p><%= f.label :things %></p>
     <p><%= f.text_area :things %></p>
-
-    <%= f.color_field :color %>
-    <%= f.check_box :color %>
-    <%= select_tag "params[:color",options_for_select(["red","green","blue"],"red") %>
-    <%= check_box_tag "params[:schedule][:color]","red",checked = false %>
-    <%= f.color_field :color%>
-    <%= f.check_box "color",{checked:true},true,false %>
-    <%= f.check_box "color",{checked:true},true,false %>
-
+    <!-- 背景カラー選択を追加する -->
     <p><%= f.submit class:"button" %></p>
   <% end %>
 </div>
-<!-- <div class="schedule">
-  <h2>TODAY is <%= Time.current %></h2>
-  <% @schedules.each do |schedule| %>
-    <table border="1" rules="cols" width="100%">
-      <tr>
-        <th>schedule ID:</th>
-        <td><%= schedule.id %></td>
-      </tr>
-      <tr>
-        <th>starttime:</th>
-        <td><%= schedule.starttime %></td>
-      </tr>
-      <tr>
-        <th>title</th>
-        <td><%= schedule.title %></td>
-      </tr><tr>
-        <th>things</th>
-        <td><%= schedule.things %></td>
-      </tr>
-      <tr>
-        <th>endtime:</th>
-        <td><%= schedule.endtime %></td>
-      </tr>
-      <tr>
-        <td>
-          <%= form_with url:schedule,local:true,method: :get do |edit| %>
-          <%= hidden_field_tag :scheduleId,schedule.id %>
-          <%= edit.submit "変更" %>
-        <% end %>
-      </td>
-        <td><%= link_to "削除", schedule,method: :delete %></td>
-      </tr>
-    </table>
-    <p><span>schedule ID:</span><%= schedule.id %></p>
-  <% end %>
-</div> -->
