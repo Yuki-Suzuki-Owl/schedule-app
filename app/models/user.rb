@@ -4,5 +4,5 @@ class User < ApplicationRecord
   validates :name,:email,presence:true
   validates :email,uniqueness:{case_sensitive:false}
   validates :password,presence:true,allow_nil:true,length:{minimum:7}
-  validates :ziel,presence:true
+  validates :ziel,presence:true,allow_nil:true
 end

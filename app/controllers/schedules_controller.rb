@@ -1,12 +1,13 @@
 class SchedulesController < ApplicationController
   before_action :login_user,only:[:index,:show,:create,:update,:destroy]
   def show
-    @schedules = current_user.schedules.where(schedule_day:params[:day])
     # カレンダーから受け取った日付をスケジュールで使う。無い場合は今日の日付け使用
     if params[:day]
       @schedule_day = params[:day]
+      @schedules = current_user.schedules.where(schedule_day:params[:day])
     else
       @schedule_day = Date.today
+      @schedules = current_user.schedules.where(schedule_day:Date.today)
     end
 
     # スケジュール変更の際に変更スケジュールのIDが送られれくる

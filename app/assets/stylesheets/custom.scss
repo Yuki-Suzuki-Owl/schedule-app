@@ -1,5 +1,6 @@
 body {
-  background-color:palegreen;
+  // background-color:palegreen;
+  background-color:#c6ffc6;
   a {
     text-decoration:none;
     color:black;
@@ -51,6 +52,7 @@ main {
   .plan {
     // background-color:skyblue;
     border-top:1px solid black;
+    border-bottom:1px solid black;
     padding-top:5%;
     padding-bottom:5%;
     .endtime {
@@ -131,7 +133,8 @@ main {
   .make {
     // float:left;e0ffff
     width:50%;
-    background-color:#93c9ff;
+    // background-color:#93c9ff;
+    background-color:#b7dbff;
     list-style:none;
     text-align:center;
     line-height:2;
@@ -154,7 +157,7 @@ main {
 .calendar {
   width:100%;
   // margin:0 auto;
-  background-color:white;
+  // background-color:white;
   // margin-top:20px;
   // text-align:center;
   .plan_day {
@@ -196,7 +199,8 @@ main {
   }
   .user-info {
     .ziel {
-      background-color:lightgray;
+      background-color:#00afcc;
+      // background-color:#00a1e9;
       padding:10px 20px;
       section {
         padding-bottom:10px;

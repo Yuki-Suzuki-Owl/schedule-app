@@ -49,8 +49,8 @@ RSpec.describe 'user機能',type: :system do
           visit edit_user_path(@user)
           fill_in "Name",with:""
           fill_in "Email",with:""
-          fill_in "Password",with:""
-          fill_in "Password confirmation",with:""
+          # fill_in "Password",with:""
+          # fill_in "Password confirmation",with:""
           click_button "更新する"
           expect(current_path).to eq user_path(@user)
           expect(page).to have_content "Nameを入力してください"
@@ -64,8 +64,8 @@ RSpec.describe 'user機能',type: :system do
           visit edit_user_path(@user)
           fill_in "Name",with:"Change Name"
           fill_in "Email",with:@user.email
-          fill_in "Password",with:@user.password
-          fill_in "Password confirmation",with:@user.password
+          # fill_in "Password",with:@user.password
+          # fill_in "Password confirmation",with:@user.password
           click_button "更新する"
           expect(current_path).to eq user_path(@user)
           expect(page).to have_content "ユーザー情報を更新しました。"
