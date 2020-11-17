@@ -1,6 +1,37 @@
 <div class="user">
-  <h1>ユーザー情報</h1>
-  ユーザーID：<%= @user.id %>
-  ユーザー名：<%= @user.name %>
-  <%= link_to "編集",edit_user_path %>
+  <div class="user-info">
+    <h1>ユーザー情報</h1>
+    <p>
+      ユーザー名：<%= @user.name %>
+      <%= link_to "編集",edit_user_path,class:"button" %>
+      <%= link_to "目標・メモ設定",ziel_user_path,class:"button" %>
+    </p>
+    <div class="ziel">
+      <section>
+        <p>● 今年の目標</p>
+        <% if @user.ziel && !@user.ziel.blank? %>
+        <ul>
+          <p><%= simple_format(@user.ziel) %></p>
+        </ul>
+        <% else %>
+          <ul>
+            <p>まだ目標が設定されていません。</p>
+            <p>目標をセットしてみましょう！</p>
+          </ul>
+        <% end %>
+      </section>
+      <section>
+        <p>● その他メモ</p>
+        <% if @user.memo && !@user.memo.blank? %>
+        <ul>
+          <p><%= simple_format(@user.memo)%></p>
+        </ul>
+        <% else %>
+          <ul>
+            <p>メモは作成されていません。</p>
+          </ul>
+        <% end %>
+      </section>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,16 @@
+<div class="user">
+  <h1>目標・メモ設定</h1>
+  <div class="form_field">
+    <%= form_with model:@user,url:ziel_user_path,method: :post,local:true do |f| %>
+      <%= render 'shared/errors_messages',object:f.object %>
+      
+      <%= f.label :ziel,class:"form" %>
+      <%= f.text_area :ziel,class:"form" %>
+
+      <%= f.label :memo,class:"form" %>
+      <%= f.text_area :memo,class:"form" %>
+
+      <%= f.submit class:"form button"%>
+    <% end %>
+  </div>
+</div>

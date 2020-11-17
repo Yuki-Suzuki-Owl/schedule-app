@@ -52,11 +52,29 @@ class UsersController < ApplicationController
     end
   end
 
+  def set_ziel
+    @user = current_user
+  end
+
+  def create_ziel
+    @user = current_user
+    if @user.update(ziel_params)
+      redirect_to @user,notice:"目標を設定しました！"
+    else
+      render 'set_ziel'
+    end
+  end
+
 
   private
     def user_params
       params.require(:user).permit(:name,:email,:password,:password_confirmation)
     end
+
+    def ziel_params
+      params.require(:user).permit(:ziel,:memo)
+    end
+
 
     def correct_user
       @user = User.find(params[:id])

@@ -194,6 +194,20 @@ main {
       margin-bottom:10px;
     }
   }
+  .user-info {
+    .ziel {
+      background-color:lightgray;
+      padding:10px 20px;
+      section {
+        padding-bottom:10px;
+        width:90%;
+        margin:0 auto;
+        li {
+          line-height:2;
+        }
+      }
+    }
+  }
 }
 
 /* about */

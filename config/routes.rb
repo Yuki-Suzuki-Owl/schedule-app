@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # get 'users/edit'
   # root to:"users#index"
   root to:"schedules#about"
+  get    'ziel/user',to:"users#set_ziel"
+  post    'ziel/user',to:"users#create_ziel"
   get    'login' ,to:"sessions#new"
   post   'login' ,to:"sessions#create"
   delete 'logout',to:"sessions#destroy"
