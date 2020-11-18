@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_14_034517) do
+ActiveRecord::Schema.define(version: 2020_11_18_040128) do
 
   create_table "schedules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "starttime", null: false
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2020_11_14_034517) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "ziel"
     t.text "memo"
+    t.string "remember_digest"
   end
 
 end

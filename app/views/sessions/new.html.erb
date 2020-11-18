@@ -8,6 +8,11 @@
       <%= f.label :password,class:"form" %>
       <%= f.password_field :password,class:"form" %>
 
+      <%= f.label :remember_me,class:"form" do %>
+        <%= f.check_box :remember_me %>
+        <span>remember me</span>
+      <% end %>
+
       <%= f.submit "ログイン",class:"form button" %>
     <% end %>
   </div>
