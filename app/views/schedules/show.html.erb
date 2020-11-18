@@ -53,10 +53,10 @@
     <% if @schedule.new_record? %>
       <!-- @scheduleが新規かどうかでvalueの値(@schedule.schedule_day)を変える -->
       <%= f.hidden_field :schedule_day,value:@schedule_day %>
-      @schedule_day : schedule day is <%= @schedule_day %>
+      <%= @schedule_day %>
     <% else %>
       <%= f.hidden_field :schedule_day,value:@schedule.schedule_day %>
-      @schedule.schedule_day :schedule day is <%= @schedule.schedule_day %><br>
+      <%= @schedule.schedule_day %>
     <% end %>
 
     <p>
