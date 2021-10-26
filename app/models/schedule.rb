@@ -25,10 +25,18 @@ class Schedule < ApplicationRecord
     # end
 
     def schedule_validation
-      if endtime < starttime
-        errors.add(:endtime,"：時の流れに逆らってはいけません。")
-      elsif starttime == endtime
-        errors.add(:starttime,"：時は止めれません。")
+      if starttime.nil?
+        errors.add(:starttime,"must be starttime")
+      elsif endtime.nil?
+        errors.add(:endtime,"must be endtime")
+      else
+
+        if endtime < starttime
+          errors.add(:endtime,"：時の流れに逆らってはいけません。")
+        elsif starttime == endtime
+          errors.add(:starttime,"：時は止めれません。")
+        end
+        
       end
 
       schedules = user.schedules.where(schedule_day:schedule_day)

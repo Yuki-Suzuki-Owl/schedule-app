@@ -5,6 +5,6 @@ FactoryBot.define do
     title { "Title" }
     things { "Things" }
     user
-    schedule_day { Date.today }
+    schedule_day { "2020-10-12"}
   end
 end

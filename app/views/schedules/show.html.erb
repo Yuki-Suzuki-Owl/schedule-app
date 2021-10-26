@@ -10,7 +10,10 @@
 
       <section>
         <!-- <li>plan day : <%= schedule.schedule_day %></li> -->
-        <li class="starttime">開始時刻 : <%= schedule.starttime.to_s(:datetime_jp) %></li>
+        <li class="starttime">
+          開始時刻 : <%= schedule.starttime.to_s(:datetime_jp) %>
+        </li>
+
         <ol>
           <div class="plan_content">
             <li><label for="label<%= schedule.id %>">タイトル : <%= schedule.title %></label></li>
@@ -23,7 +26,11 @@
             </div>
           </div>
         </ol>
-        <li class="endtime">終了時刻 : <%= schedule.endtime.to_s(:datetime_jp) %></li>
+
+        <li class="endtime">
+          終了時刻 : <%= schedule.endtime.to_s(:datetime_jp) %>
+        </li>
+
         <div class="plan_option">
           <%= form_with url:schedule_path,local:true,method: :get do |edit| %>
             <%= hidden_field_tag :scheduleId,schedule.id %>

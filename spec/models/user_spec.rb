@@ -7,6 +7,7 @@ RSpec.describe User, type: :model do
   end
 
   it "名前、メール、パスワードがあれば有効" do
+    @user.valid?
     expect(@user).to be_valid
   end
 

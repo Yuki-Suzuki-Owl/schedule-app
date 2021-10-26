@@ -18,25 +18,18 @@ RSpec.describe Schedule, type: :model do
   it "starttime endtime title user関連づけ schedule_dayがあれば有効" do
     expect(@schedule).to be_valid
   end
-  # エラーになる
-  # it "starttimeが空なら無効" do
-  #   # error-code
-  #   # Failure/Error: if endtime < starttime
-  #   #  ArgumentError:
-  #   #    comparison of ActiveSupport::TimeWithZone with nil failed
-  #   @schedule.starttime = nil
-  #   @schedule.valid?
-  #   expect(@schedule.errors[:starttime]).to include("can't be blank")
-  # end
+
+  it "starttimeが空なら無効" do
+    @schedule.starttime = nil
+    @schedule.valid?
+    expect(@schedule.errors[:starttime]).to include("must be starttime")
+  end
   #
-  # it "endtimeが空なら無効" do
-  #   # Failure/Error: if endtime < starttime
-  #   # NoMethodError:
-  #   #   undefined method `<' for nil:NilClass
-  #   @schedule.endtime = nil
-  #   @schedule.valid?
-  #   expect(@schedule.errors[:endtime]).to include("can't be blank")
-  # end
+  it "endtimeが空なら無効" do
+    @schedule.endtime = nil
+    @schedule.valid?
+    expect(@schedule.errors[:endtime]).to include("must be endtime")
+  end
 
   it "titleが空なら無効" do
     @schedule.title = nil
@@ -57,6 +50,7 @@ RSpec.describe Schedule, type: :model do
     @schedule.valid?
     expect(@schedule.errors[:starttime]).to include("：時は止めれません。")
   end
+
   it "starttime,endtimeがかぶってなかったら有効" do
     @schedule.starttime = Time.current
     @schedule.endtime = Time.current + 1.hours
@@ -71,6 +65,7 @@ RSpec.describe Schedule, type: :model do
     @schedule.valid?
     expect(@schedule.errors[:endtime]).to include("：時の流れに逆らってはいけません。")
   end
+
   it "starttimeよりendtimeが遅かったら有効" do
     @schedule.starttime = Time.current
     @schedule.endtime = Time.current + 1.hours
@@ -106,6 +101,7 @@ RSpec.describe Schedule, type: :model do
     @schedule2.valid?
     expect(@schedule2.errors[:endtime]).to include("：この時刻までの予定が既に入っています。")
   end
+
   it "既存のendtimeと新規のendtimeの時間がかぶってなかったら有効" do
     @schedule.save
     @schedule2 = FactoryBot.build(:schedule,starttime:Time.current.ago(2.hours),endtime:Time.current.ago(1.hours),title:"task1",things:"",user:@user,schedule_day:Date.today)
@@ -119,6 +115,7 @@ RSpec.describe Schedule, type: :model do
     @schedule2.valid?
     expect(@schedule2.errors[:starttime]).to include("：この時間帯にはもう既に予定が入っています。")
   end
+
   it "既存planAを囲んでいない新規planBは有効" do
     @schedule.save
     @schedule2 = FactoryBot.build(:schedule,starttime:Time.current.ago(1.hours),endtime:Time.current,title:"task1",things:"",user:@user,schedule_day:Date.today)
@@ -132,6 +129,7 @@ RSpec.describe Schedule, type: :model do
     @schedule2.valid?
     expect(@schedule2.errors[:starttime]).to include("：この時間にはもう既に予定が入っています。")
   end
+
   it "既存planAの中に新規planBのstarttimeがかぶってなかったら有効" do
     @schedule.save
     @schedule2 = FactoryBot.build(:schedule,starttime:Time.current + 3.hours,endtime:Time.current + 4.hours,title:"task1",things:"",user:@user,schedule_day:Date.today)
@@ -145,6 +143,7 @@ RSpec.describe Schedule, type: :model do
     @schedule2.valid?
     expect(@schedule2.errors[:starttime]).to include("：次の予定と時間がかぶってしまいます。")
   end
+  
   it "既存planAの中に新規planBのendtimeがかぶってなかったら有効" do
     @schedule.save
     @schedule2 = FactoryBot.build(:schedule,starttime:Time.current.ago(2.hours),endtime:Time.current,title:"task1",things:"",user:@user,schedule_day:Date.today)
